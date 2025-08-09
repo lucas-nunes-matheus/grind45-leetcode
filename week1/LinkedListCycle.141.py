@@ -15,11 +15,8 @@ class Solution:
 
         # As -10^5 <= Node.val <= 10^5 as a constraint, we can consider that Node.val = -10^5 - 1 is a mark
 
-        if head is None: # Cover the case empty LL
+        if head is None or head.next is None: # Cover the cases of empty LL and single node LL 
             return None
-
-        if head.next is None: # Cover the cases of single node LL 
-            return False
 
         while head is not None:
             if head.val == -100001:
