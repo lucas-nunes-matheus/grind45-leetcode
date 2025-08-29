@@ -18,16 +18,17 @@ class Solution:
     def majorityElement(self, nums: list[int]) -> int:
         
         counter = {}
+        higher_frequency = majority_element = 0 
 
         for num in nums:
             counter[num] = 1 + counter.get(num, 0)
-
-        majority_element = nums[0]
-        most_frequent = float("-inf")
-
-        for key, val in counter.items():
-            if val > most_frequent:
-                most_frequent = val
-                majority_element = key
+            if counter[num] > higher_frequency:
+                higher_frequency = counter[num]
+                majority_element = num
 
         return majority_element
+
+# s = Solution()
+# print(s.majorityElement([1]))
+# print(s.majorityElement([3,2,3]))
+# print(s.majorityElement([2,2,1,1,1,2,2]))
