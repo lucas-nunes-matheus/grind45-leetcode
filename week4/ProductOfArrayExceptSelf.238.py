@@ -18,23 +18,28 @@ constraints:
 
 class Solution:
     def productExceptSelf(self, nums: list[int]) -> list[int]:
-        prefix = [1]*len(nums)
-        suffix = [1]*len(nums)
+        prefix = [0]*len(nums)
+        suffix = [0]*len(nums)
         answer = [0]*len(nums)
 
+        prefix[0] = 1
+        product = 1
         for i in range(1, len(nums)):
-            prefix[i] = nums[i-1] * prefix[i-1]
+            product *= nums[i-1]
+            prefix[i] = product
 
+        suffix[-1] = 1 
+        product = 1
         for j in range(len(nums)-2, -1, -1):
-            suffix[j] = nums[j+1] * suffix[j+1]
-        
-        answer[0] = suffix[0]
-        answer[-1] = prefix[-1]
+            product *= nums[j+1]
+            suffix[j] = product
 
-        for k in range(1, len(answer)-1):
-            answer[k] = prefix[k] * suffix[k]
-        
+        answer[0], answer[-1] = suffix[0], prefix[-1]
+
+        for k in range(1, len(nums)-1):
+            answer[k] = prefix[k]*suffix[k]
+
         return answer
         
-# s = Solution()
-# print(f"Test Case 1: nums = [1,2,3,4].\n{s.productExceptSelf([1,2,3,4]) == [24,12,8,6]}")
+s = Solution()
+print(f"Test Case 1: nums = [1,2,3,4].\n{s.productExceptSelf([1,2,3,4]) == [24,12,8,6]}")
